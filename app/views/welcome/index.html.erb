@@ -1,0 +1,26 @@
+<h2 id="monthTitle"></h2>
+
+<label for="month">Insert Month/Year:
+</label>
+  <input type="text" name="month" id="month" placeholder="" required>
+</label>
+
+<h2>Square Image</h2>
+
+<div class="thumb">
+  <% @covers[0..3].each do |cover| %>
+    <%= image_tag("covers/#{cover}") %>
+  <% end %>
+</div>
+
+<button id="downloadThumbGallery">Download</button>
+
+<h2>Featured Image</h2>
+
+<div class="container">
+  <% @covers.each do |cover| %>
+    <%= image_tag("covers/#{cover}") %>
+  <% end %>
+</div>
+
+<button id="downloadFeaturedGallery">Download</button>
