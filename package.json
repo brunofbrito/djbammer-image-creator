@@ -7,7 +7,8 @@
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "^4.0.7",
     "dayjs": "^1.8.16",
-    "dom-to-image": "^2.6.0",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",

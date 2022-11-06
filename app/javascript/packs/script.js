@@ -1,16 +1,11 @@
 import dayjs from 'dayjs';
-import domtoimage from 'dom-to-image';
+import html2canvas from 'html2canvas';
+import { saveAs } from 'file-saver';
 
-let currentMonth = dayjs()
-  .format('MMMMYYYY')
-  .toLowerCase();
+let currentMonth = dayjs().format('MMMMYYYY').toLowerCase();
+const nextMonth = dayjs().add(1, 'month').format('MMMMYYYY').toLowerCase();
 
-const nextMonth = dayjs()
-  .add(1, 'month')
-  .format('MMMMYYYY')
-  .toLowerCase();
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const thumbGallery = document.getElementById('downloadThumbGallery');
   const featuredGallery = document.getElementById('downloadFeaturedGallery');
 
@@ -21,27 +16,25 @@ document.addEventListener('DOMContentLoaded', function() {
   featuredGallery.addEventListener('click', downloadFeaturedGallery);
 
   function downloadThumbGallery() {
-    domtoimage.toJpeg(thumb, { quality: 0.95 }).then(function(dataUrl) {
-      var link = document.createElement('a');
-      link.download = `${currentMonth}-square.jpg`;
-      link.href = dataUrl;
-      link.click();
+    html2canvas(thumb).then((canvas) => {
+      canvas.toBlob(function (blob) {
+        window.saveAs(blob, `${currentMonth}-square.jpg`);
+      });
     });
   }
 
   function downloadFeaturedGallery() {
-    domtoimage.toJpeg(container, { quality: 0.95 }).then(function(dataUrl) {
-      var link = document.createElement('a');
-      link.download = `${currentMonth}-featured.jpg`;
-      link.href = dataUrl;
-      link.click();
+    html2canvas(container).then((canvas) => {
+      canvas.toBlob(function (blob) {
+        window.saveAs(blob, `${currentMonth}-featured.jpg`);
+      });
     });
   }
 
   const month = document.getElementById('month');
   month.placeholder = `eg: ${nextMonth}`;
 
-  month.addEventListener('input', function(evt) {
+  month.addEventListener('input', function (evt) {
     currentMonth = this.value.toLowerCase();
   });
 
