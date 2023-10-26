@@ -34,5 +34,6 @@
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore tracklist images
+# Ignore tracklist & images
 /app/assets/images/*
+/app/assets/tracklist/*
