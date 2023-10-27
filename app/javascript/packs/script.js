@@ -7,7 +7,45 @@ let currentYear = dayjs().format('YYYY');
 const nextMonth = dayjs().add(1, 'month').format('MMMMYYYY').toLowerCase();
 
 document.addEventListener('DOMContentLoaded', function () {
+  const monthTitle = document.getElementById('monthTitle');
+  monthTitle.innerText = `Is this for ${dayjs().format('MMMM')}? If not...`;
 
+  const monthInput = document.getElementById('month');
+  monthInput.placeholder = `eg: ${nextMonth}`;
+
+  month.addEventListener('input', function (evt) {
+    currentMonth = this.value.toLowerCase();
+    generateTracklist(currentMonth);
+  });
+  
+  generateTracklist(currentMonth);
+  
+  const downloadSquareBtn = document.getElementById('downloadThumbGallery');
+  const thumb = document.getElementsByClassName('thumb')[0];
+  const downloadFeaturedBtn = document.getElementById('downloadFeaturedGallery');
+  const container = document.getElementsByClassName('container')[0];
+  downloadSquareBtn.addEventListener('click', () => { downloadThumbGallery(thumb)});
+  downloadFeaturedBtn.addEventListener('click', () => {downloadFeaturedGallery(container)});
+
+});
+
+  function downloadThumbGallery(thumb) {
+    html2canvas(thumb).then((canvas) => {
+      canvas.toBlob(function (blob) {
+        window.saveAs(blob, `${currentMonth}-square.jpg`);
+      });
+    });
+  };
+
+  function downloadFeaturedGallery(container) {
+    html2canvas(container).then((canvas) => {
+      canvas.toBlob(function (blob) {
+        window.saveAs(blob, `${currentMonth}-featured.jpg`);
+      });
+    });
+  };
+
+function generateTracklist(currentMonth) {
   const newDocument = document.implementation.createHTMLDocument('New Document');
   const newDocElement = newDocument.documentElement;
   newDocElement.innerHTML = gon.tracklist;
@@ -19,48 +57,23 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   tracklist = `<ol>${tracklist.join("")}</ol>`
 
+  let formattedMonth = currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1, -4);
+  let year = currentMonth.slice(-4);
+
   let fullTracklistData = `{
-    id: 305,
-    slug: '${currentMonth}',
-    publishedDate: '${dayjs().format('YYYY-MM-DDTHH:mm')}',
-    title: '${dayjs().format('MMMM YYYY')}',
-    year: 2023,
-    tracklist: '${tracklist}',
-    mixcloud: 'https://f001.backblazeb2.com/file/djbammer-mixes/${currentYear}/${currentMonth}.mp3',
-    waveform: 'https://f001.backblazeb2.com/file/djbammer-mixes/${currentYear}/${currentMonth}.json',
-    fileName: 'http://mixes.djbammer.net/${currentYear}/${currentMonth}.mp3',
-  },`
-  
+  id: 305,
+  slug: '${currentMonth}',
+  publishedDate: '${dayjs().format('YYYY-MM-DDTHH:mm')}',
+  title: '${currentMonth? formattedMonth + " " + year : dayjs().format('MMMM YYYY')}',
+  year: ${year},
+  tracklist: '${tracklist}',
+  mixcloud: 'https://f001.backblazeb2.com/file/djbammer-mixes/${year}/${currentMonth}.mp3',
+  waveform: 'https://f001.backblazeb2.com/file/djbammer-mixes/${year}/${currentMonth}.json',
+  fileName: 'http://mixes.djbammer.net/${year}/${currentMonth}.mp3',
+},`
+
   let textArea = document.getElementById('tracklistData');
   textArea.value = fullTracklistData;
-
-  const thumbGallery = document.getElementById('downloadThumbGallery');
-  const featuredGallery = document.getElementById('downloadFeaturedGallery');
-
-  const thumb = document.getElementsByClassName('thumb')[0];
-  const container = document.getElementsByClassName('container')[0];
-
-  thumbGallery.addEventListener('click', downloadThumbGallery);
-  featuredGallery.addEventListener('click', downloadFeaturedGallery);
-
-  function downloadThumbGallery() {
-    html2canvas(thumb).then((canvas) => {
-      canvas.toBlob(function (blob) {
-        window.saveAs(blob, `${currentMonth}-square.jpg`);
-      });
-    });
-  }
-
-  function downloadFeaturedGallery() {
-    html2canvas(container).then((canvas) => {
-      canvas.toBlob(function (blob) {
-        window.saveAs(blob, `${currentMonth}-featured.jpg`);
-      });
-    });
-  }
-
-  const monthTitle = document.getElementById('monthTitle');
-  monthTitle.innerText = `Is this for ${dayjs().format('MMMM')}? If not...`;
 
   document.getElementById('copyButton').addEventListener('click', function() {
     textArea.select();
@@ -69,4 +82,4 @@ document.addEventListener('DOMContentLoaded', function () {
     textArea.setSelectionRange(0, 0);
     alert('Copied!');
   });
-});
+}
