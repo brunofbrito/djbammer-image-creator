@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function downloadThumbGallery(thumb) {
     html2canvas(thumb).then((canvas) => {
       canvas.toBlob(function (blob) {
-        window.saveAs(blob, `${currentMonth}-square.jpg`);
+        window.saveAs(blob, `${currentMonth}-square.png`);
       });
     });
   };
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function downloadFeaturedGallery(container) {
     html2canvas(container).then((canvas) => {
       canvas.toBlob(function (blob) {
-        window.saveAs(blob, `${currentMonth}-featured.jpg`);
+        window.saveAs(blob, `${currentMonth}-featured.png`);
       });
     });
   };
