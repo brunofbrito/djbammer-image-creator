@@ -75,11 +75,16 @@ function generateTracklist(currentMonth) {
   let textArea = document.getElementById('tracklistData');
   textArea.value = fullTracklistData;
 
-  document.getElementById('copyButton').addEventListener('click', function() {
+  const copyButton = document.getElementById('copyButton')
+
+  copyButton.addEventListener('click', function() {
+    const initialBtnText = copyButton.innerHTML;
     textArea.select();
     textArea.setSelectionRange(0, textArea.value.length);
     document.execCommand('copy');
     textArea.setSelectionRange(0, 0);
-    alert('Copied!');
+    copyButton.innerHTML = "Copied! &#10004;"
+    setTimeout(function(){ copyButton.innerHTML = initialBtnText }, 2000);
+
   });
 }
