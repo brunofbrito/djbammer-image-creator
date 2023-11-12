@@ -7,7 +7,7 @@
 
 <h2>Square Image</h2>
 
-<div class="thumb">
+<div class="image-container thumb">
   <% @covers[0..3].each do |cover| %>
     <%= image_tag("covers/#{cover}") %>
   <% end %>
@@ -17,7 +17,7 @@
 
 <h2>Featured Image</h2>
 
-<div class="container">
+<div class="image-container featured">
   <% @covers.each do |cover| %>
     <%= image_tag("covers/#{cover}") %>
   <% end %>

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const downloadSquareBtn = document.getElementById('downloadThumbGallery');
   const thumb = document.getElementsByClassName('thumb')[0];
   const downloadFeaturedBtn = document.getElementById('downloadFeaturedGallery');
-  const container = document.getElementsByClassName('container')[0];
+  const container = document.getElementsByClassName('featured')[0];
   downloadSquareBtn.addEventListener('click', () => { downloadThumbGallery(thumb)});
   downloadFeaturedBtn.addEventListener('click', () => {downloadFeaturedGallery(container)});
 

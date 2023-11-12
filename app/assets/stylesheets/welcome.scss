@@ -99,19 +99,20 @@ input {
   cursor: text;
 }
 
-.container {
+.image-container.featured {
   width: 941px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }
 
-.container img, .thumb img {
-  width: 100%;
-}
-.thumb {
+.image-container.thumb {
   width: 300px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.image-container img {
+  width: 100%;
 }
 
 button {
